@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Cook Book</string>
+    <string name="about_context">Pellentesque id orci dolor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque feugiat purus tortor, in vehicula neque congue at. Phasellus euismod libero ac dui ultricies facilisis et non purus. Mauris commodo viverra nulla id maximus. Mauris lectus purus, dictum nec metus sit amet, fringilla rutrum turpis. Etiam elit orci, pellentesque et lectus eleifend, venenatis aliquam felis. Fusce faucibus elit sit amet enim pharetra bibendum. Nam semper velit vitae erat ullamcorper, in tincidunt leo porttitor. Fusce ut metus tempor, sollicitudin risus faucibus, pharetra risus. Nullam nec mauris molestie ante faucibus aliquet eu eget leo. Aenean lectus dolor, varius id feugiat non, cursus ut velit. Aenean consequat tincidunt mollis. Etiam a luctus dolor.
+
+Curabitur lacinia, enim ut tristique interdum, quam mauris viverra eros, in luctus lectus tortor sit amet orci. Nunc blandit finibus urna non vulputate. Suspendisse egestas cursus quam ut interdum. Etiam finibus pharetra leo non ornare. Vestibulum quis quam sit amet lorem aliquet interdum. Ut sit amet enim massa. Cras erat ante, finibus sed porta eget, fermentum tincidunt diam. Etiam ex eros, luctus ut felis ac, interdum pretium massa. Nulla sed ullamcorper diam. Aenean dolor nunc, semper in suscipit a, rutrum id mauris. Etiam vitae lectus luctus, lacinia dui et, malesuada lacus. Ut sit amet elementum urna. Aenean eu auctor quam.
+    </string>
+    <string name="ingredient">Nguyên liệu:</string>
+</resources>

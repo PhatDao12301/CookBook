@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="elevation_2">2dp</dimen>
+    <dimen name="margin_1">1dp</dimen>
+    <dimen name="padding_1">1dp</dimen>
+    <dimen name="margin_3">3dp</dimen>
+    <dimen name="super_large_size">15sp</dimen>
+    <dimen name="normal_size">8sp</dimen>
+</resources>

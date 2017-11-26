@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_aboutUs"
+        android:icon="@drawable/ic_info_gray_24dp"
+        android:title="About us"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menu_exit"
+        android:icon="@drawable/ic_exit_to_app_gray_24dp"
+        android:title="Exit"
+        app:showAsAction="always" />
+</menu>
