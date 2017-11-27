@@ -14,14 +14,14 @@ import collections.nvm.cookbook.utils.Item;
  * Created by Dao Tien Phat on 10/19/2017.
  */
 
-public class ViewHolder extends RecyclerView.ViewHolder {
+public class ViewHolderFoodList extends RecyclerView.ViewHolder {
     public TextView title;
     public ImageView ivImage, ivHotFood;
     public FoodItemClickListener mListener;
     public LinearLayout list_item;
     private String imageUrl;
 
-    public ViewHolder(View itemView, FoodItemClickListener listener) {
+    public ViewHolderFoodList(View itemView, FoodItemClickListener listener) {
         super(itemView);
         this.title = itemView.findViewById(R.id.tvTitle);
         this.ivImage = itemView.findViewById(R.id.ivImage);

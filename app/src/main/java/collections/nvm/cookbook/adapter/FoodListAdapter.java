@@ -13,7 +13,7 @@ import java.util.List;
 
 import collections.nvm.cookbook.utils.Item;
 import collections.nvm.cookbook.R;
-import collections.nvm.cookbook.utils.ViewHolder;
+import collections.nvm.cookbook.utils.ViewHolderFoodList;
 import collections.nvm.cookbook.listener.FoodItemClickListener;
 
 
@@ -21,7 +21,7 @@ import collections.nvm.cookbook.listener.FoodItemClickListener;
  * Created by Dao Tien Phat on 10/16/2017.
  */
 
-public class FoodListAdapter extends RecyclerView.Adapter<ViewHolder> {
+public class FoodListAdapter extends RecyclerView.Adapter<ViewHolderFoodList> {
     private List<Item> mItems;
     private Context mContext;
     private FoodItemClickListener mListener;
@@ -39,14 +39,14 @@ public class FoodListAdapter extends RecyclerView.Adapter<ViewHolder> {
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolderFoodList onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.food_list_item, parent, false);
-        ViewHolder vh = new ViewHolder(v, mListener); // pass the view to View Holder
+        ViewHolderFoodList vh = new ViewHolderFoodList(v, mListener); // pass the view to View Holder
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolderFoodList holder, final int position) {
         holder.title.setText(mItems.get(position).getTitle());
 //        holder.author.setText(mItems.get(position).getAuthor());
 //        holder.ivImage.setImageDrawable(mItems.get(position).getAvatar());
@@ -81,12 +81,12 @@ public class FoodListAdapter extends RecyclerView.Adapter<ViewHolder> {
 //    @NonNull
 //    @Override
 //    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-//        ViewHolder viewHolder;
+//        ViewHolderFoodList viewHolder;
 //        if (convertView == null) {
 //            convertView = LayoutInflater.from(getContext())
 //                    .inflate(R.layout.food_list_item, parent, false);
 //
-//            viewHolder = new ViewHolder(convertView);
+//            viewHolder = new ViewHolderFoodList(convertView);
 //            viewHolder.title = (TextView) convertView.findViewById(R.id.title);
 //            viewHolder.author = (TextView) convertView.findViewById(R.id.author);
 //            viewHolder.ivImage = (ImageView) convertView.findViewById(R.id.ivImage);
@@ -94,7 +94,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<ViewHolder> {
 //            convertView.setTag(viewHolder);
 //
 //        } else {
-//            viewHolder = (ViewHolder) convertView.getTag();
+//            viewHolder = (ViewHolderFoodList) convertView.getTag();
 //        }
 //        Item item = getItem(position);
 //

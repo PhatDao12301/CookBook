@@ -6,4 +6,6 @@
     <dimen name="margin_3">3dp</dimen>
     <dimen name="super_large_size">15sp</dimen>
     <dimen name="normal_size">8sp</dimen>
+    <dimen name="margin_16">16dp</dimen>
+    <dimen name="margin_6">6dp</dimen>
 </resources>

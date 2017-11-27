@@ -12,6 +12,12 @@
         <item name="colorAccent">@color/brightRedColor</item>
     </style>
 
+    <style name="AppThemeNormal" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimaryDark">@color/darkRedColor</item>
+        <item name="colorPrimary">@color/brightDarkRedColor</item>
+        <item name="colorAccent">@color/brightRedColor</item>
+    </style>
+
     <style name="AudioFileInfoOverlayText">
         <item name="android:paddingLeft">4px</item>
         <item name="android:paddingBottom">4px</item>

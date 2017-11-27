@@ -1,59 +1,50 @@
 package collections.nvm.cookbook.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
 import collections.nvm.cookbook.R;
 import collections.nvm.cookbook.utils.GuideItem;
-import collections.nvm.cookbook.utils.NguyenLieu;
+import collections.nvm.cookbook.utils.Item;
+import collections.nvm.cookbook.utils.ViewHolderFoodList;
+import collections.nvm.cookbook.utils.ViewHolderGuideline;
 
 /**
  * Created by Dao Tien Phat on 11/26/2017.
  */
 
-public class GuidelineAdapter extends BaseAdapter {
+public class GuidelineAdapter extends RecyclerView.Adapter<ViewHolderGuideline> {
     private Context context;
-    private int layout;
     private List<GuideItem> guideItemList;
 
-    public GuidelineAdapter(Context context, int layout, List<GuideItem> guideItemList) {
+    public GuidelineAdapter(Context context, List<GuideItem> guideItemList) {
         this.context = context;
-        this.layout = layout;
         this.guideItemList = guideItemList;
     }
 
     @Override
-    public int getCount() {
-        return 0;
+    public ViewHolderGuideline onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.guide_item, parent, false);
+        ViewHolderGuideline vh = new ViewHolderGuideline(v); // pass the view to View Holder
+        return vh;
     }
 
     @Override
-    public Object getItem(int i) {
-        return null;
+    public void onBindViewHolder(ViewHolderGuideline holder, int position) {
+        holder.tvStep.setText("Bước " + this.guideItemList.get(position).getStep() + ": ");
+        holder.tvContent.setText(this.guideItemList.get(position).getContent());
     }
 
     @Override
-    public long getItemId(int i) {
-        return 0;
+    public int getItemCount() {
+        return guideItemList.size();
     }
 
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = inflater.inflate(layout,null);
-        //ánh xạ
-        TextView tvStep = (TextView) view.findViewById(R.id.tvStep);
-        TextView tvContent = (TextView) view.findViewById(R.id.tvContent);
-        //gán data
-        GuideItem guideItem = guideItemList.get(i);
-        tvStep.setText(guideItem.getStep());
-        tvContent.setText(guideItem.getContent());
-        return view;
-    }
 }

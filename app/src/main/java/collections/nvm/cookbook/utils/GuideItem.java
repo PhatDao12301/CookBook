@@ -11,7 +11,7 @@ public class GuideItem {
     public GuideItem() {
     }
 
-    public GuideItem(String content, int step) {
+    public GuideItem(int step, String content) {
         this.content = content;
         this.step = step;
     }

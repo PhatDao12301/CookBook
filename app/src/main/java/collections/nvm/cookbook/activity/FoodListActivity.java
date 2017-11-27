@@ -88,11 +88,8 @@ public class FoodListActivity extends AppCompatActivity implements FoodItemClick
 
         List<Item> items = new ArrayList<>();
         for (int i = 0; i < titles.length; i++) {
-//            Drawable d = getResources().getAvatar(R.drawable.hamburger);
             items.add(new Item(titles[i], contents[i], newList[i]));
 
-//            Drawable d2 = getResources().getAvatar(R.drawable.pasta);
-//            items.add(new Item(titles[i], contents[i], false));
         }
 
         fa = new FoodListAdapter(this, items, this);
