@@ -20,11 +20,6 @@
             android:orientation="vertical"
             app:cardElevation="@dimen/elevation_2">
 
-            <ImageView
-                android:id="@+id/ivTitle"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/brightDarkRedColor"/>
         </android.support.v7.widget.CardView>
 
         <FrameLayout

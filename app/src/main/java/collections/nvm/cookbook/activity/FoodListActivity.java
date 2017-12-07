@@ -1,9 +1,12 @@
 package collections.nvm.cookbook.activity;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +15,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -50,13 +56,14 @@ public class FoodListActivity extends AppCompatActivity implements FoodItemClick
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference myRef;
     private List<FoodItem> foodList = new ArrayList<>();
+    private List<FoodItem> searchList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_list);
 
-        setTitle("Lorem ipsum dela vega simo");
+//        setTitle("Lorem ipsum dela vega simo");
         setTitleColor(Color.WHITE);
 
         mStaggeredGridView = (RecyclerView) findViewById(R.id.mStaggeredGridView);
@@ -79,6 +86,7 @@ public class FoodListActivity extends AppCompatActivity implements FoodItemClick
                 // This method is called once with the initial value and again
 
                 collectFood((Map<String, Object>) dataSnapshot.getValue());
+                cancelSearch();
             }
 
             @Override
@@ -88,45 +96,45 @@ public class FoodListActivity extends AppCompatActivity implements FoodItemClick
             }
         });
 
-        String[] titles = {"Lẩu cá bống", "Cơm chiên dương châu",
-                "Gà tiềm thuốc bắc", "Tàu hũ chiên nước mắm",
-                "Cháo gà Cao Lãnh", "Lẩu cá diêu hồng", "Mực xào xả ớt", "Giả cầy",
-                "Pizza", "Trà sữa 3k", "Lẩu cá bống", "Cơm chiên dương châu",
-                "Gà tiềm thuốc bắc", "Tàu hũ chiên nước mắm",
-                "Cháo gà Cao Lãnh", "Lẩu cá diêu hồng", "Mực xào xả ớt", "Giả cầy",
-                "Pizza", "Trà sữa 3k"};
+//        String[] titles = {"Lẩu cá bống", "Cơm chiên dương châu",
+//                "Gà tiềm thuốc bắc", "Tàu hũ chiên nước mắm",
+//                "Cháo gà Cao Lãnh", "Lẩu cá diêu hồng", "Mực xào xả ớt", "Giả cầy",
+//                "Pizza", "Trà sữa 3k", "Lẩu cá bống", "Cơm chiên dương châu",
+//                "Gà tiềm thuốc bắc", "Tàu hũ chiên nước mắm",
+//                "Cháo gà Cao Lãnh", "Lẩu cá diêu hồng", "Mực xào xả ớt", "Giả cầy",
+//                "Pizza", "Trà sữa 3k"};
 
-        String[] contents = {"http://imageshack.com/a/img924/3642/yfkjtE.jpg",
-                "http://imageshack.com/a/img922/5923/Ry1rSU.png",
-                "http://imageshack.com/a/img924/3707/x60RKa.png",
-                "http://imageshack.com/a/img924/3707/x60RKa.png",
-                "http://imageshack.com/a/img924/5632/avsdDq.jpg",
-                "http://imageshack.com/a/img923/2899/wVcdrE.png",
-                "http://imageshack.com/a/img924/3642/yfkjtE.jpg",
-                "http://imageshack.com/a/img922/5923/Ry1rSU.png",
-                "http://imageshack.com/a/img924/3707/x60RKa.png",
-                "http://imageshack.com/a/img924/3707/x60RKa.png",
-                "http://imageshack.com/a/img924/5632/avsdDq.jpg",
-                "http://imageshack.com/a/img923/2899/wVcdrE.png",
-                "http://imageshack.com/a/img924/3642/yfkjtE.jpg",
-                "http://imageshack.com/a/img922/5923/Ry1rSU.png",
-                "http://imageshack.com/a/img924/3707/x60RKa.png",
-                "http://imageshack.com/a/img924/3707/x60RKa.png",
-                "http://imageshack.com/a/img924/5632/avsdDq.jpg",
-                "http://imageshack.com/a/img923/2899/wVcdrE.png",
-                "http://imageshack.com/a/img924/3642/yfkjtE.jpg",
-                "http://imageshack.com/a/img922/5923/Ry1rSU.png",
-        };
+//        String[] contents = {"http://imageshack.com/a/img924/3642/yfkjtE.jpg",
+//                "http://imageshack.com/a/img922/5923/Ry1rSU.png",
+//                "http://imageshack.com/a/img924/3707/x60RKa.png",
+//                "http://imageshack.com/a/img924/3707/x60RKa.png",
+//                "http://imageshack.com/a/img924/5632/avsdDq.jpg",
+//                "http://imageshack.com/a/img923/2899/wVcdrE.png",
+//                "http://imageshack.com/a/img924/3642/yfkjtE.jpg",
+//                "http://imageshack.com/a/img922/5923/Ry1rSU.png",
+//                "http://imageshack.com/a/img924/3707/x60RKa.png",
+//                "http://imageshack.com/a/img924/3707/x60RKa.png",
+//                "http://imageshack.com/a/img924/5632/avsdDq.jpg",
+//                "http://imageshack.com/a/img923/2899/wVcdrE.png",
+//                "http://imageshack.com/a/img924/3642/yfkjtE.jpg",
+//                "http://imageshack.com/a/img922/5923/Ry1rSU.png",
+//                "http://imageshack.com/a/img924/3707/x60RKa.png",
+//                "http://imageshack.com/a/img924/3707/x60RKa.png",
+//                "http://imageshack.com/a/img924/5632/avsdDq.jpg",
+//                "http://imageshack.com/a/img923/2899/wVcdrE.png",
+//                "http://imageshack.com/a/img924/3642/yfkjtE.jpg",
+//                "http://imageshack.com/a/img922/5923/Ry1rSU.png",
+//        };
 
-        Boolean[] newList = {true, false, true,
-                true, false, true,
-                false, false, true,
-                false, true, true,
-                false, true, false,
-                false, true, false,
-                false, false, true,
-                false, true, true,
-                false, true, false,};
+//        Boolean[] newList = {true, false, true,
+//                true, false, true,
+//                false, false, true,
+//                false, true, true,
+//                false, true, false,
+//                false, true, false,
+//                false, false, true,
+//                false, true, true,
+//                false, true, false,};
 
 //        List<Item> items = new ArrayList<>();
 //        for (int i = 0; i < titles.length; i++) {
@@ -134,7 +142,7 @@ public class FoodListActivity extends AppCompatActivity implements FoodItemClick
 //
 //        }
 
-        fa = new FoodListAdapter(this, foodList, this);
+        fa = new FoodListAdapter(this, searchList, this);
 
         StaggeredGridLayoutManager sglm = new StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL);
 
@@ -153,7 +161,7 @@ public class FoodListActivity extends AppCompatActivity implements FoodItemClick
     @Override
     public void onClickListener(Item i) {
         // intend here
-        Toast.makeText(this, i.getTitle() + i.getImageUrl(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, i.getTitle() + i.getImageUrl(), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, DetailActivity.class);
 
         intent.putExtra("name", i.getTitle());
@@ -227,4 +235,59 @@ public class FoodListActivity extends AppCompatActivity implements FoodItemClick
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.food_list_bar, menu);
+
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView =
+                (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getComponentName()));
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                cancelSearch();
+                return false;
+            }
+        });
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                search(s);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+        return true;
+    }
+
+    public void cancelSearch() {
+//        fa = new FoodListAdapter(this, foodList, this);
+        if (!searchList.isEmpty())
+            searchList.clear();
+
+        searchList.addAll(foodList);
+        onRefresh();
+    }
+
+    public void search(String s) {
+        if (!searchList.isEmpty())
+            searchList.clear();
+
+        for (FoodItem fi : foodList) {
+            if (fi.getName().contains(s)) {
+                searchList.add(fi);
+            }
+        }
+//        fa = new FoodListAdapter(this, searchList, this);
+        onRefresh();
+    }
 }
