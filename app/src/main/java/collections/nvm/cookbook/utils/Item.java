@@ -14,14 +14,14 @@ import collections.nvm.cookbook.R;
 public class Item {
 
     private String id;
-    private String title, imageUrl;
+    private String title, imageUrl, youtubeUrl;
     private Drawable avatar;
     private Boolean isHotFood;
     private List<String> guidelineList, urlList, ingredientList;
     private List<Drawable> images;
 
     public Item() {
-        id = title = imageUrl = "";
+        id = title = imageUrl = youtubeUrl = "";
         isHotFood = false;
         guidelineList = new ArrayList<>();
         urlList = new ArrayList<>();
@@ -137,5 +137,13 @@ public class Item {
 
     public void setImages(List<Drawable> images) {
         this.images = images;
+    }
+
+    public String getYoutubeUrl() {
+        return youtubeUrl;
+    }
+
+    public void setYoutubeUrl(String youtubeUrl) {
+        this.youtubeUrl = youtubeUrl;
     }
 }

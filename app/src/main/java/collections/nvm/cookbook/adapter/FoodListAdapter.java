@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import collections.nvm.cookbook.utils.FoodItem;
 import collections.nvm.cookbook.utils.Item;
 import collections.nvm.cookbook.R;
 import collections.nvm.cookbook.utils.ViewHolderFoodList;
@@ -22,18 +23,18 @@ import collections.nvm.cookbook.listener.FoodItemClickListener;
  */
 
 public class FoodListAdapter extends RecyclerView.Adapter<ViewHolderFoodList> {
-    private List<Item> mItems;
+    private List<FoodItem> mItems;
     private Context mContext;
     private FoodItemClickListener mListener;
 
-    public FoodListAdapter(@NonNull Context context, @NonNull List<Item> objects, FoodItemClickListener listener) {
+    public FoodListAdapter(@NonNull Context context, @NonNull List<FoodItem> objects, FoodItemClickListener listener) {
 //        super(context, -1);
         this.mItems = objects;
         this.mContext = context;
         this.mListener = listener;
     }
 
-    public void setItems(List<Item> items) {
+    public void setItems(List<FoodItem> items) {
         this.mItems.clear();
         this.mItems.addAll(items);
     }
@@ -47,20 +48,24 @@ public class FoodListAdapter extends RecyclerView.Adapter<ViewHolderFoodList> {
 
     @Override
     public void onBindViewHolder(final ViewHolderFoodList holder, final int position) {
-        holder.title.setText(mItems.get(position).getTitle());
+        holder.title.setText(mItems.get(position).getName());
 //        holder.author.setText(mItems.get(position).getAuthor());
 //        holder.ivImage.setImageDrawable(mItems.get(position).getAvatar());
         Glide.with(mContext)
-                .load(mItems.get(position).getImageUrl())
+                .load(mItems.get(position).getAvatar())
                 .placeholder(R.drawable.place_holder)
                 .into(holder.ivImage);
 
-        holder.isHotFood(mItems.get(position).getHotFood());
+        if (mItems.get(position).getIsHot().equals("true")) {
+            holder.isHotFood(true);
+        } else holder.isHotFood(false);
+
+//        holder.isHotFood(mItems.get(position).getIsHot());
         holder.getList_item().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mListener.onClickListener(new Item(holder.getTitle().getText().toString(),
-                        mItems.get(position).getImageUrl(),
+                        mItems.get(position).getAvatar(),
                         true));
             }
         });

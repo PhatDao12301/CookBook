@@ -1,5 +1,7 @@
 package collections.nvm.cookbook.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -10,8 +12,10 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,7 +44,7 @@ public class DetailActivity extends AppCompatActivity {
     ////////////////////////////////////////////////////////////////////
 
     private ListView lvNguyenLieu;
-    public Item mItem;
+    private Item mItem;
     private TextView tvTitle;
 
     private RecyclerView rcGuideline;
@@ -128,6 +132,7 @@ public class DetailActivity extends AppCompatActivity {
         arrayNguyenLieu.add(new NguyenLieu("Khoai tây", "3 củ"));
 
         lvNguyenLieu.setAdapter(adapter);
+        lvNguyenLieu.setFocusable(false);
         HelperScrollView.getListViewSize(lvNguyenLieu);
     }
 
@@ -163,5 +168,23 @@ public class DetailActivity extends AppCompatActivity {
 
         }
         return true;
+    }
+
+    public void onPlayVideo(View view) {
+//        play youtube video
+        Intent intent = new Intent(this, VideoActivity.class);
+        intent.putExtra("link", mItem.getYoutubeUrl());
+        startActivity(intent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+
+    public void onShareClicked(View view) {
+//        share food
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain"); // type of sharing
+        String shareBody = this.mItem.getTitle() + " via LNPCollections. Visit us at: www...com";
+//        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(sharingIntent, "Share via"));
     }
 }
