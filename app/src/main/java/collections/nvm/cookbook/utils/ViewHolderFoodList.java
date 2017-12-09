@@ -79,14 +79,4 @@ public class ViewHolderFoodList extends RecyclerView.ViewHolder {
         this.list_item = list_item;
     }
 
-//    @Override
-    public void onClick(View view) {
-        Boolean b = false;
-        if (getIvHotFood().getVisibility() == View.VISIBLE) {
-            b = true;
-        }
-
-        Item foodItem = new Item((String) getTitle().getText(), getIvImage().getDrawable(), b);
-        mListener.onClickListener(foodItem);
-    }
 }

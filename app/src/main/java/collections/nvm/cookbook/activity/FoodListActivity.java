@@ -159,15 +159,15 @@ public class FoodListActivity extends AppCompatActivity implements FoodItemClick
     }
 
     @Override
-    public void onClickListener(Item i) {
+    public void onClickListener(FoodItem i) {
         // intend here
 //        Toast.makeText(this, i.getTitle() + i.getImageUrl(), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, DetailActivity.class);
 
-        intent.putExtra("name", i.getTitle());
-        intent.putExtra("url", i.getImageUrl());
-        intent.putExtra("hot", i.getHotFood());
-        intent.putExtra("id", i.getId());
+        intent.putExtra("name", i.getName());
+        intent.putExtra("url", i.getAvatar());
+        intent.putExtra("hot", i.getIsHot());
+        intent.putExtra("id", i.getID());
         startActivity(intent);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 

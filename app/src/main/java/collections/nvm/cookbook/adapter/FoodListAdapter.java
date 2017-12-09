@@ -64,9 +64,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<ViewHolderFoodList> {
         holder.getList_item().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.onClickListener(new Item(holder.getTitle().getText().toString(),
-                        mItems.get(position).getAvatar(),
-                        true));
+                mListener.onClickListener(mItems.get(position));
             }
         });
     }

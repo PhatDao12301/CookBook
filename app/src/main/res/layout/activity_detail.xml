@@ -69,10 +69,10 @@
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:background="#80eeeeee"
-                    android:scaleType="fitCenter"
                     android:onClick="onShareClicked"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/ic_share_red_24dp" />
-                
+
             </LinearLayout>
 
             <RelativeLayout
@@ -129,7 +129,7 @@
                             android:layout_marginBottom="@dimen/margin_3"
                             android:layout_marginRight="@dimen/margin_3"
                             android:background="#eeeeee"
-                            android:text="Hướng dẫn"
+                            android:text="Hướng dẫn:"
                             android:textColor="@android:color/black"
                             android:textSize="25sp" />
 

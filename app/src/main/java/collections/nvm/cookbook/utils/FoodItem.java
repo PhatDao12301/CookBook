@@ -27,6 +27,16 @@ public class FoodItem {
     public HashMap<String, String> ingredient;
 
     public FoodItem() {
+        avatar = name = ID = youtubevideo = isHot = "";
+        guideline = new ArrayList<>();
+        images = new ArrayList<>();
+        ingredient = new HashMap<>();
+
+    }
+
+    public FoodItem(String ID, String name) {
+        this.name = name;
+        this.ID = ID;
     }
 
     //    protected FoodItem(Parcel in) {

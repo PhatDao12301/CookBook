@@ -1,5 +1,6 @@
 package collections.nvm.cookbook.listener;
 
+import collections.nvm.cookbook.utils.FoodItem;
 import collections.nvm.cookbook.utils.Item;;
 
 /**
@@ -8,5 +9,5 @@ import collections.nvm.cookbook.utils.Item;;
 
 public interface FoodItemClickListener {
 
-    public void onClickListener(Item i);
+    public void onClickListener(FoodItem i);
 }
