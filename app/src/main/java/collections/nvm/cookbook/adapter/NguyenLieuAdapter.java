@@ -52,8 +52,8 @@ public class NguyenLieuAdapter extends ArrayAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(layout, null);
         //ánh xạ
-        TextView txtTenNL = (TextView) view.findViewById(R.id.tenNL);
-        TextView txtSoLuong = (TextView) view.findViewById(R.id.soLuong);
+        TextView txtTenNL = view.findViewById(R.id.tenNL);
+        TextView txtSoLuong = view.findViewById(R.id.soLuong);
         //gán data
         NguyenLieu nguyenlieu = nguyenLieuList.get(i);
         txtTenNL.setText(nguyenlieu.getTen());

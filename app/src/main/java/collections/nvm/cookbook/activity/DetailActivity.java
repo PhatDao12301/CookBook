@@ -24,6 +24,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +66,7 @@ public class DetailActivity extends AppCompatActivity {
     private List<GuideItem> mGuideItemList;
     private List<String> mPreviewImageList;
     private List<NguyenLieu> mIngredientList;
+    private List<NguyenLieu> arrayNguyenLieu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +84,10 @@ public class DetailActivity extends AppCompatActivity {
 
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvTitle.setText(mItem.getName());
+        //ánh xạ
+        lvNguyenLieu = (ListView) findViewById(R.id.listViewNL);
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        rcGuideline = (RecyclerView) findViewById(R.id.rcGuideline);
 
         mGuideItemList = new ArrayList<>();
         mPreviewImageList = new ArrayList<>();
@@ -124,33 +131,37 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     public void initSlideImage(List<String> slideList) {
+//        String[] images = {
+//                "https://imgur.com/IGtj6rL",
+//                "https://imgur.com/IGtj6rL",
+//        };
+//        slideList = new ArrayList<>(Arrays.asList(images));
 
-        viewPager = (ViewPager) findViewById(R.id.pager);
 //        myAdapter = new MyAdapter(this, images);
         slideImageAdapter = new SlideImageAdapter(this, slideList);
         viewPager.setAdapter(slideImageAdapter);
     }
 
     public void initIngredient(List<NguyenLieu> list) {
-        //ánh xạ
-        lvNguyenLieu = (ListView) findViewById(R.id.listViewNL);
+
         //khởi tạo
-//        arrayNguyenLieu = new ArrayList<NguyenLieu>();
+        arrayNguyenLieu = new ArrayList<>();
         ingredientAdapter = new NguyenLieuAdapter(this, R.layout.display, list);
+//        ingredientAdapter = new NguyenLieuAdapter(this, R.layout.display, arrayNguyenLieu);
 
         //Tạo demo
-//        arrayNguyenLieu.add(new NguyenLieu("Thịt heo", "500gr"));
-//        arrayNguyenLieu.add(new NguyenLieu("Thịt bò", "200gr"));
-//        arrayNguyenLieu.add(new NguyenLieu("Cá diêu hồng", "2 con"));
-//        arrayNguyenLieu.add(new NguyenLieu("Hành lá", "50gr"));
-//        arrayNguyenLieu.add(new NguyenLieu("Đậu phụ", "3 miếng"));
-//        arrayNguyenLieu.add(new NguyenLieu("Đường", "3 muỗng"));
-//        arrayNguyenLieu.add(new NguyenLieu("Chả cá", "1 kí"));
-//        arrayNguyenLieu.add(new NguyenLieu("Cải thảo", "1 bó"));
-//        arrayNguyenLieu.add(new NguyenLieu("Bắp cải", "1"));
-//        arrayNguyenLieu.add(new NguyenLieu("Cà chua", "3 trái"));
-//        arrayNguyenLieu.add(new NguyenLieu("Khoai lang", "3 củ"));
-//        arrayNguyenLieu.add(new NguyenLieu("Khoai tây", "3 củ"));
+        arrayNguyenLieu.add(new NguyenLieu("Thịt heo", "500gr"));
+        arrayNguyenLieu.add(new NguyenLieu("Thịt bò", "200gr"));
+        arrayNguyenLieu.add(new NguyenLieu("Cá diêu hồng", "2 con"));
+        arrayNguyenLieu.add(new NguyenLieu("Hành lá", "50gr"));
+        arrayNguyenLieu.add(new NguyenLieu("Đậu phụ", "3 miếng"));
+        arrayNguyenLieu.add(new NguyenLieu("Đường", "3 muỗng"));
+        arrayNguyenLieu.add(new NguyenLieu("Chả cá", "1 kí"));
+        arrayNguyenLieu.add(new NguyenLieu("Cải thảo", "1 bó"));
+        arrayNguyenLieu.add(new NguyenLieu("Bắp cải", "1"));
+        arrayNguyenLieu.add(new NguyenLieu("Cà chua", "3 trái"));
+        arrayNguyenLieu.add(new NguyenLieu("Khoai lang", "3 củ"));
+        arrayNguyenLieu.add(new NguyenLieu("Khoai tây", "3 củ"));
 
         lvNguyenLieu.setAdapter(ingredientAdapter);
         lvNguyenLieu.setFocusable(false);
@@ -158,7 +169,6 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     public void initGuideline(List<GuideItem> list) {
-        rcGuideline = (RecyclerView) findViewById(R.id.rcGuideline);
 //        mPreviewImageList = new ArrayList<>();
 //        mPreviewImageList.add(new GuideItem(1, "Mua nguyên liệu"));
 //        mPreviewImageList.add(new GuideItem(2, "Cho vào nồi"));
@@ -170,6 +180,7 @@ public class DetailActivity extends AppCompatActivity {
         mGuidelineAdapter = new GuidelineAdapter(this, list);
         rcGuideline.setAdapter(mGuidelineAdapter);
         rcGuideline.setLayoutManager(sglm);
+        rcGuideline.setFocusable(false);
     }
 
     @Override
@@ -232,7 +243,7 @@ public class DetailActivity extends AppCompatActivity {
         mItem.setIngredient(users);
 
         parseFoodItemToList(mItem, mPreviewImageList, mGuideItemList, mIngredientList);
-
+        initIngredient(mIngredientList);
         mGuidelineAdapter.notifyDataSetChanged();
         slideImageAdapter.notifyDataSetChanged();
         ingredientAdapter.notifyDataSetChanged();
@@ -250,6 +261,7 @@ public class DetailActivity extends AppCompatActivity {
         if (!ingredientList.isEmpty())
             ingredientList.clear();
 //        preview images here
+        mItem.getImages().remove(0);
         imagesList.addAll(mItem.getImages());
 //        guideline list
         List<String> l = item.getGuideline();
