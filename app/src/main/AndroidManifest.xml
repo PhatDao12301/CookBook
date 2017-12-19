@@ -12,17 +12,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.FoodListActivity">
+
+        </activity>
+        <activity android:name=".activity.AboutActivity" />
+        <activity
+            android:name=".activity.DetailActivity"
+            android:theme="@style/AppThemeNormal" />
+        <activity android:name=".activity.VideoActivity" />
+        <activity android:name=".activity.StartActivity"
+            android:theme="@style/AppThemeNoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.AboutActivity" />
-        <activity
-            android:name=".activity.DetailActivity"
-            android:theme="@style/AppThemeNormal" />
-        <activity android:name=".activity.VideoActivity"></activity>
     </application>
 
 </manifest>

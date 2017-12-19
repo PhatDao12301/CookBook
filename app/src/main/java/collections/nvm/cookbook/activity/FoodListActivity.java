@@ -4,16 +4,21 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -45,6 +50,8 @@ public class FoodListActivity extends AppCompatActivity implements FoodItemClick
     private SwipeRefreshLayout srlRefresh;
     private NavigationView nvDrawer;
     private DrawerLayout dlDrawer;
+    private ActionBarDrawerToggle drawerToggle;
+    private Toolbar toolbar;
     ///////////////////////////////////////////////////////////////////////////
     private static final String ITEM_AVATAR = "avatar";
     private static final String ITEM_NAME = "name";
@@ -63,13 +70,17 @@ public class FoodListActivity extends AppCompatActivity implements FoodItemClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_list);
 
-//        setTitle("Lorem ipsum dela vega simo");
+        setTitle("");
         setTitleColor(Color.WHITE);
 
         mStaggeredGridView = (RecyclerView) findViewById(R.id.mStaggeredGridView);
         srlRefresh = (SwipeRefreshLayout) findViewById(R.id.srlRefresh);
-        nvDrawer = (NavigationView) findViewById(R.id.nvDrawer);
         dlDrawer = (DrawerLayout) findViewById(R.id.dlDrawer);
+        nvDrawer = (NavigationView) findViewById(R.id.nvDrawer);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        drawerToggle = setupDrawerToggle();
 
         setupDrawerContent(nvDrawer);
         srlRefresh.setOnRefreshListener(this);
@@ -289,5 +300,20 @@ public class FoodListActivity extends AppCompatActivity implements FoodItemClick
         }
 //        fa = new FoodListAdapter(this, searchList, this);
         onRefresh();
+    }
+
+    private ActionBarDrawerToggle setupDrawerToggle() {
+        return new ActionBarDrawerToggle(this,
+                dlDrawer,
+                toolbar,
+                R.string.app_name,
+                R.string.app_name);
+    }
+
+    @Override
+    public void onPostCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        super.onPostCreate(savedInstanceState, persistentState);
+        // TODO: 12/19/2017 add syncState to show hamburger button
+        drawerToggle.syncState();
     }
 }
