@@ -3,28 +3,22 @@ package collections.nvm.cookbook.activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -37,21 +31,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import collections.nvm.cookbook.adapter.FoodListAdapter;
-import collections.nvm.cookbook.utils.FoodItem;
-import collections.nvm.cookbook.utils.Item;
 import collections.nvm.cookbook.R;
+import collections.nvm.cookbook.adapter.FoodListAdapter;
 import collections.nvm.cookbook.listener.FoodItemClickListener;
+import collections.nvm.cookbook.utils.FoodItem;
 
 public class FoodListActivity extends AppCompatActivity implements FoodItemClickListener,
-        SwipeRefreshLayout.OnRefreshListener {
+        SwipeRefreshLayout.OnRefreshListener,
+        NavigationView.OnNavigationItemSelectedListener {
     private RecyclerView mStaggeredGridView;
     private FoodListAdapter fa;
     private SwipeRefreshLayout srlRefresh;
+    private Toolbar toolbar;
+    /////////////////////////////////////////////////////////////////////////
     private NavigationView nvDrawer;
     private DrawerLayout dlDrawer;
     private ActionBarDrawerToggle drawerToggle;
-    private Toolbar toolbar;
     ///////////////////////////////////////////////////////////////////////////
     private static final String ITEM_AVATAR = "avatar";
     private static final String ITEM_NAME = "name";
@@ -70,19 +65,13 @@ public class FoodListActivity extends AppCompatActivity implements FoodItemClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_list);
 
-        setTitle("");
-        setTitleColor(Color.WHITE);
-
-        mStaggeredGridView = (RecyclerView) findViewById(R.id.mStaggeredGridView);
-        srlRefresh = (SwipeRefreshLayout) findViewById(R.id.srlRefresh);
-        dlDrawer = (DrawerLayout) findViewById(R.id.dlDrawer);
-        nvDrawer = (NavigationView) findViewById(R.id.nvDrawer);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        drawerToggle = setupDrawerToggle();
+        mStaggeredGridView = (RecyclerView) findViewById(R.id.mStaggeredGridView);
+        srlRefresh = (SwipeRefreshLayout) findViewById(R.id.srlRefresh);
 
-        setupDrawerContent(nvDrawer);
+        drawerSetup();
         srlRefresh.setOnRefreshListener(this);
 
         FirebaseDatabase.getInstance().setPersistenceEnabled(true); // enable store data on disk
@@ -94,8 +83,8 @@ public class FoodListActivity extends AppCompatActivity implements FoodItemClick
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                // TODO: 1/1/2018 lấy thức ăn ở đây
                 // This method is called once with the initial value and again
-
                 collectFood((Map<String, Object>) dataSnapshot.getValue());
                 cancelSearch();
             }
@@ -184,40 +173,30 @@ public class FoodListActivity extends AppCompatActivity implements FoodItemClick
 
     }
 
-    public void setupDrawerContent(NavigationView navigationView) {
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                selectDrawerItem(item);
-                return true;
-            }
-        });
-    }
-
     private void selectDrawerItem(MenuItem item) {
         Fragment fragment = null;
 
-        Class FragmentClass = null;
-        switch (item.getItemId()) {
-            case R.id.menu_aboutUs:
-//                FragmentClass = SouthParkFragment.class;
-                Intent i = new Intent(FoodListActivity.this, AboutActivity.class);
-                startActivity(i);
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                break;
-            case R.id.menu_exit:
-//                FragmentClass = FamilyGuyFragment.class;
-                System.exit(0);
-                break;
-        }
-        try {
-            fragment = (Fragment) FragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        Class FragmentClass = null;
+//        switch (item.getItemId()) {
+//            case R.id.menu_aboutUs:
+////                FragmentClass = SouthParkFragment.class;
+//                Intent i = new Intent(FoodListActivity.this, AboutActivity.class);
+//                startActivity(i);
+//                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+//                break;
+//            case R.id.menu_exit:
+////                FragmentClass = FamilyGuyFragment.class;
+//                System.exit(0);
+//                break;
+//        }
+//        try {
+//            fragment = (Fragment) FragmentClass.newInstance();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
 
-        dlDrawer.closeDrawers();
+//        dlDrawer.closeDrawers();
     }
 
     private void collectFood(Map<String, Object> users) {
@@ -246,37 +225,36 @@ public class FoodListActivity extends AppCompatActivity implements FoodItemClick
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.food_list_bar, menu);
-
-        SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView =
-                (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(
-                searchManager.getSearchableInfo(getComponentName()));
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                cancelSearch();
-                return false;
-            }
-        });
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                search(s);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                return false;
-            }
-        });
+    public boolean onCreateOptionsMenu1(Menu menu) {
+// TODO: 12/19/2017 this is the primary onCreateOptionsMenu
+//        MenuInflater inflater = getMenuInflater();
+////        inflater.inflate(R.menu.food_list_bar, menu);
+//
+//        SearchManager searchManager =
+//                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+//        SearchView searchView =
+//                (SearchView) menu.findItem(R.id.search).getActionView();
+//        searchView.setSearchableInfo(
+//                searchManager.getSearchableInfo(getComponentName()));
+//        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+//            @Override
+//            public boolean onClose() {
+//                cancelSearch();
+//                return false;
+//            }
+//        });
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String s) {
+//                search(s);
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String s) {
+//                return false;
+//            }
+//        });
         return true;
     }
 
@@ -298,22 +276,105 @@ public class FoodListActivity extends AppCompatActivity implements FoodItemClick
                 searchList.add(fi);
             }
         }
-//        fa = new FoodListAdapter(this, searchList, this);
+        //fa = new FoodListAdapter(this, searchList, this);
         onRefresh();
     }
 
-    private ActionBarDrawerToggle setupDrawerToggle() {
-        return new ActionBarDrawerToggle(this,
-                dlDrawer,
-                toolbar,
-                R.string.app_name,
-                R.string.app_name);
+    //   drawer region here
+    @Override
+    public void onBackPressed() {
+        if (dlDrawer.isDrawerOpen(GravityCompat.START)) {
+            dlDrawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    private void drawerSetup() {
+        // TODO: 1/1/2018 set up các thông số cho Drawer tại đây
+        dlDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerToggle = new ActionBarDrawerToggle(
+                this, dlDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        dlDrawer.setDrawerListener(drawerToggle);
+        drawerToggle.syncState();
+
+        nvDrawer = (NavigationView) findViewById(R.id.nav_view);
+        nvDrawer.setNavigationItemSelectedListener(this);
     }
 
     @Override
-    public void onPostCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onPostCreate(savedInstanceState, persistentState);
-        // TODO: 12/19/2017 add syncState to show hamburger button
-        drawerToggle.syncState();
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.food_list_menu, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchManager searchManager = (SearchManager) FoodListActivity.this.getSystemService(Context.SEARCH_SERVICE);
+
+        SearchView searchView = null;
+        if (searchItem != null) {
+            searchView = (SearchView) searchItem.getActionView();
+        }
+        if (searchView != null) {
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(FoodListActivity.this.getComponentName()));
+        }
+        if (searchView != null) {
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+                    search(s);
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String s) {
+                    return false;
+                }
+            });
+            searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+                @Override
+                public boolean onClose() {
+                    cancelSearch();
+                    return false;
+                }
+            });
+        }
+        return super.onCreateOptionsMenu(menu);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.menu_about_us) {
+            return true;
+        } else if (id == R.id.menu_exit) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.menu_about_us) {
+            // Handle the search action
+            Intent i = new Intent(FoodListActivity.this, AboutActivity.class);
+            startActivity(i);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        } else if (id == R.id.menu_exit) {
+            this.finish();
+        }
+
+        dlDrawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+//    end Drawer region
 }

@@ -33,11 +33,11 @@
 
             <ImageView
                 android:id="@+id/ivHotFood"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_margin="@dimen/margin_1"
                 android:scaleType="fitCenter"
-                android:src="@drawable/new_item_icon"
+                android:src="@drawable/icon_hot_food"
                 android:visibility="visible" />
         </RelativeLayout>
 

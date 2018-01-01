@@ -5,4 +5,10 @@
 Curabitur lacinia, enim ut tristique interdum, quam mauris viverra eros, in luctus lectus tortor sit amet orci. Nunc blandit finibus urna non vulputate. Suspendisse egestas cursus quam ut interdum. Etiam finibus pharetra leo non ornare. Vestibulum quis quam sit amet lorem aliquet interdum. Ut sit amet enim massa. Cras erat ante, finibus sed porta eget, fermentum tincidunt diam. Etiam ex eros, luctus ut felis ac, interdum pretium massa. Nulla sed ullamcorper diam. Aenean dolor nunc, semper in suscipit a, rutrum id mauris. Etiam vitae lectus luctus, lacinia dui et, malesuada lacus. Ut sit amet elementum urna. Aenean eu auctor quam.
     </string>
     <string name="ingredient">Nguyên liệu:</string>
+    <string name="title_activity_food_list2">ActivityFoodList2</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>

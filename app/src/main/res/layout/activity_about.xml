@@ -16,7 +16,7 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="1dp"
             android:text="About us"
             android:textColor="@android:color/black"
             android:textSize="30sp" />
