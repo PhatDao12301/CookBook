@@ -1,8 +1,20 @@
 <resources>
     <string name="app_name">Cook Book</string>
-    <string name="about_context">Pellentesque id orci dolor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque feugiat purus tortor, in vehicula neque congue at. Phasellus euismod libero ac dui ultricies facilisis et non purus. Mauris commodo viverra nulla id maximus. Mauris lectus purus, dictum nec metus sit amet, fringilla rutrum turpis. Etiam elit orci, pellentesque et lectus eleifend, venenatis aliquam felis. Fusce faucibus elit sit amet enim pharetra bibendum. Nam semper velit vitae erat ullamcorper, in tincidunt leo porttitor. Fusce ut metus tempor, sollicitudin risus faucibus, pharetra risus. Nullam nec mauris molestie ante faucibus aliquet eu eget leo. Aenean lectus dolor, varius id feugiat non, cursus ut velit. Aenean consequat tincidunt mollis. Etiam a luctus dolor.
-
-Curabitur lacinia, enim ut tristique interdum, quam mauris viverra eros, in luctus lectus tortor sit amet orci. Nunc blandit finibus urna non vulputate. Suspendisse egestas cursus quam ut interdum. Etiam finibus pharetra leo non ornare. Vestibulum quis quam sit amet lorem aliquet interdum. Ut sit amet enim massa. Cras erat ante, finibus sed porta eget, fermentum tincidunt diam. Etiam ex eros, luctus ut felis ac, interdum pretium massa. Nulla sed ullamcorper diam. Aenean dolor nunc, semper in suscipit a, rutrum id mauris. Etiam vitae lectus luctus, lacinia dui et, malesuada lacus. Ut sit amet elementum urna. Aenean eu auctor quam.
+    <string name="about_context">\t\t\t\tĐồ án CookBook \r\n
+\tThực hiện bởi nhóm phát triển: LNPCollections
+\r\n
+\tGồm các thành viên:\r\n
+	\t\t- Phan Thế Lỉnh - 15520426\r\n
+	\t\t- Nguyễn Phương Nam - 15520518\r\n
+	\t\t- Đào Tiến Phát - 15520600\r\n
+\r\n
+Ứng dụng nhằm mục đích phục vụ đồ án và không mang mục đích thương mại.
+\r\n\r\n
+\tMọi hình thức sử dụng sản phẩm này với mục đích khác cần có sự chấp thuận của nhóm phát triển.\r\n
+\r\n\tLiên hệ chúng tôi: lnpcollections@gmail.com\r\n
+\tHoặc số điện thoại: 01633947864 - Đ.T.Phát\r\n
+\r\n
+\tChân thành cảm ơn các bạn đã sử dụng sản phẩm của chúng tôi, những chức năng mới hơn sẽ được cập nhật trong các phiên bản sau!
     </string>
     <string name="ingredient">Nguyên liệu:</string>
     <string name="title_activity_food_list2">ActivityFoodList2</string>
